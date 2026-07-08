@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const expanded = question.getAttribute('aria-expanded') === 'true';
                 const willExpand = !expanded;
 
-                // close other FAQ items when opening this one
                 if (willExpand) {
                     faqItems.forEach((other) => {
                         if (other === item) return;
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Smooth scrolling for anchor links
+   
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -57,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Booking form: show simple inline feedback instead of submitting
+   
     const bookingForm = document.querySelector('.booking form');
     if (bookingForm) {
         bookingForm.addEventListener('submit', (e) => {
@@ -76,14 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // reset the form immediately
+            
             bookingForm.reset();
 
-            // remove any existing modal to avoid duplicates
+            
             const existingModal = document.querySelector('.payment-modal-overlay');
             if (existingModal && existingModal.parentNode) existingModal.parentNode.removeChild(existingModal);
 
-            // create full-screen modal overlay
+            
             const overlay = document.createElement('div');
             overlay.className = 'payment-modal-overlay';
             Object.assign(overlay.style, {
@@ -148,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Featured "Book Now" buttons scroll to booking section
     document.querySelectorAll('.featured-cars button.btn-primary').forEach((btn) => {
         btn.addEventListener('click', () => {
             const booking = document.getElementById('booking');
@@ -156,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Hero CTA button scrolls to booking form
     const heroCta = document.querySelector('.cta-button');
     if (heroCta) {
         heroCta.addEventListener('click', (e) => {
@@ -166,10 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Autoplay carousel behavior for horizontally scrollable sections
     function setupAutoplay(container, delay = 3000) {
         if (!container) return;
-        // only enable when overflow exists
+        
         if (container.scrollWidth <= container.clientWidth) return;
 
         const firstChild = container.querySelector(':scope > *');
@@ -181,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const start = () => {
             if (timer) return;
             timer = setInterval(() => {
-                // if at end, wrap to start
+            
                 if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 2) {
                     container.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
@@ -196,24 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
             timer = null;
         };
 
-        // pause on interaction
         container.addEventListener('mouseenter', stop);
         container.addEventListener('mouseleave', start);
         container.addEventListener('focusin', stop);
         container.addEventListener('focusout', start);
         container.addEventListener('pointerdown', stop);
 
-        // start autoplay
         start();
     }
 
-    // initialize autoplay for featured cars and testimonials
     const featuredContainer = document.querySelector('.featured-cars .grid-container');
     const testimonialsContainer = document.querySelector('.testimonials-container');
     setupAutoplay(featuredContainer, 3000);
     setupAutoplay(testimonialsContainer, 4000);
 
-    // Prev/Next controls behavior
     function setupControls(container) {
         if (!container) return;
         const wrapper = container.closest('.carousel-wrapper');
@@ -269,13 +261,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         container.addEventListener('scroll', () => {
-            // throttle with rAF
+            
             window.requestAnimationFrame(updateVisibility);
         });
 
         window.addEventListener('resize', updateVisibility);
 
-        // initial
         updateVisibility();
     }
 
